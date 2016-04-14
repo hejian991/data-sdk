@@ -1,0 +1,26 @@
+//package baidu.default;
+//option java_package = "baidu.default";
+
+// 主message名称需要修改成同日志名称一致。
+message SampleMessage {
+
+    //----------------------------------------------------------------------------------------------------------------
+    //  以下字段用于描述系统级传输信息，用户不需要关心。默认保留。
+    //----------------------------------------------------------------------------------------------------------------
+    //  传输配置字段，默认需要保留
+
+    optional MetaData metadata                     = 25;  
+    optional string   log_tag                      = 26;
+
+    //----------------------------------------------------------------------------------------------------------------
+    //  以上id小于128的字段为预留字段，不能添加。用户自有字段id从129开始。
+    //----------------------------------------------------------------------------------------------------------------
+
+    //optional fixed32 local_ip = 129 [(autosetter) = "ip_to_decimal(odp::extract_param(#local_ip))"];
+    optional string local_ip = 129;
+}
+message MetaData {
+    optional int32 log_module_id    =  1 [default = 1175];
+    optional string log_name        =  2 [default = "image_wantu_odp_app"];
+    optional string product_name    =  3 [default = "image"];
+}

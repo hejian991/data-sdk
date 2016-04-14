@@ -1,0 +1,243 @@
+//package baidu.default;
+
+import "descriptor.proto";
+//extend google.protobuf.FieldOptions {
+extend FieldOptions {
+    optional string autosetter = 170010;
+}
+
+
+// ��������ö�٣���Ҫ��������
+enum LanguageType {
+    ZN_CH = 0;   // ����
+    THAI = 1;    // ̩��
+    // ���²����׼�б�
+}
+
+// ��־�ַ�����ö��
+enum CodeType {
+    CODE_TYPE_UNKNOWN = 0;   // δ֪
+    UTF8 = 1;      // utf8������ѡ�ô˱����ӡ
+    GBK = 2;       // gbk
+    GB18030 = 3;   // gb18030
+}
+
+// ��ʶ�û���ݵ�id�ṹ
+message CookieUserid {
+    optional string baiduid = 1;   // cookie�е�baiduid�ֶλ�url�ж�Ӧ�Ĳ���
+    optional string hao123id = 2;  // hao123ҵ�����е�hao123id
+    optional string cproid = 3;    // cproҵ�����е�cproid
+    optional string nmid = 4;      // Ŵ��id
+}
+
+// ��ʶ�û�����id�ṹ
+message DeviceID {
+    optional string imei = 1;      // �ƶ�����imei��
+    optional string meid = 2;      // CDMA�豸������豸�룬�൱��imei
+    optional string mac_addr = 3;  // ����mac��ַ�����õ���־�ش�
+    optional string cuid = 4;      // �ٶ�ͳһ���ƶ��豸��Ӧ�õ�Ψһ��ʶ��Ϣ�����õ���־�ش�
+    optional string pccode = 5;    // windows��Ψһ�豸��ʶ��
+    optional string open_udid = 6; // apple�豸��Ψһ�豸��ʶ
+    optional string udid = 7;      // apple�豸��Ψһ�豸��ʶ���ѽ���
+    optional string idfa = 8;      // ios�豸�Ĺ��id, ���رպ�������
+}
+
+message PassportID {
+    optional uint32 userid = 1;
+    optional string username = 2;
+}
+
+message MobileLocation {
+    optional int32 gps_x = 1;  // x������
+    optional int32 gps_y = 2;  // y������
+    optional int32 gps_r = 3;  // ���ȷ�Χ
+}
+
+message MercatorLocation {
+    optional int32 mer_x = 1;  // x������
+    optional int32 mer_y = 2;  // y������
+}
+
+message HttpServiceInfo {
+    optional string user_agent = 1;    // �ͻ��˺�useragent
+    optional string request_url = 2;   // ���������URL
+    optional string http_method = 3;   // http������GET/POST
+    optional string http_status = 4;   // http����״̬��
+//    optional string cookie = 5 [(autosetter) = "odp::extract_param(#cookie)"];        // ����������cookie��
+    optional string send_bytes = 6;    // ���͵�������
+    optional string response_time = 7; // ����ʱ�䣬��λΪ����
+    optional string http_version = 8;  // http�汾
+}
+
+enum OSType {
+    OS_TYPE_UNKNWON       = 0;    // δ֪
+    IOS           = 1;    // ios
+    ANDROID       = 2;     // ��׿
+    WINDOWSPHONE  = 3;    // windows
+}
+
+message TerminalInfo {
+    optional OSType os = 1[default = OS_TYPE_UNKNWON]; // �豸����ϵͳ
+    optional string os_version = 2;             // �豸����ϵͳ�汾
+    optional string manufacturer = 3;          // �ն��豸�����̣���ƻ��������
+    optional string terminal_type = 4;         // �ն˻��ͣ���I9300��iPhone5s
+    optional int32 resolution_h = 5;          // �ն���Ļ�ֱ���(��)
+    optional int32 resolution_v = 6;         // �ն���Ļ�ֱ���(��)
+    optional int32 ppi = 7;                   // �豸�ֱ���ppi
+}
+
+message AppInfo {
+    optional string app_name    = 1;  // app���ƣ����ֶ����������������
+    optional string app_version = 2;  // app�汾
+    optional string app_channel = 3;  // app����
+}
+
+message NetInfo {
+    optional string net_type = 1;    // ������ʽ����wifi��3G
+    optional string net_apn = 2;     // ����㣬��cmnet��3gnet
+}
+
+message ViewInfo {
+    optional string page_url = 1;         // ҳ��url
+    optional string referer = 2;          // ��Դurl
+    optional int32 display_num = 3;      // չ�ֽ������
+    optional string page_title = 4;       // ҳ�����
+    optional int32 page_num = 5;         // ҳ��
+    optional bool is_pv = 6;              // ˵���Ƿ�Ϊpv��trueΪ����Ϊpv
+}
+
+enum ClientType {
+    CLIENT_TYPE_UNKNOWN = 0;       // δ֪��
+    PC_WEB = 1;        // pc��web���������
+    WAP_COMMON = 2;    // �����ܻ���wap���������
+    WAP_SMART = 3;     // ���ܻ���wap���������
+    PAD_WEB = 4;       // pad�ϵ�web����
+    PAD_APP = 5;       // pad�ϵ�app����
+    PC_CLIENT = 6;     // pc�ϵ�Ӧ�ó������
+    MOBILE_APP = 7;    // �ƶ��˵�Ӧ�ó������
+    SDK = 8;           // ͨ��sdk��ʽ�ṩ
+    API = 9;           // ͨ��api��ʽ�ṩ
+}
+
+message Common {
+
+    //--------------------����������־������Ϣ--------------------
+
+    // ��־������Ʒ�����ƣ������Ƹ�����־�Ĳ�Ʒ�߹����Զ�����Ĭ��ֵ������Ҫ�ڳ�������ӡ�
+    optional string product_name = 1;
+
+    // ��־���ƣ�����������־�����Զ�����Ĭ��ֵ������Ҫ�ڳ�������ӡ�
+    optional string module_name = 2;
+
+    // ��ʶ�û�request��Ψһid��logid��Ҫ�ô��������߼��ܹ���������������ǿ�ҽ���one action one logid��������δ���logid�����ؽ���Ҫ���ظ����ɣ����ǽ����ε�logid���ñ��ֶ��С�
+    optional string logid = 3;
+
+    // ����־��ʹ�õ����ԣ�Ĭ��Ϊ���ģ�����Ҫÿ�ж���ӡ���޸�default��ʵ�����á�
+    optional LanguageType language = 4[default = ZN_CH];
+
+    // ��־���ַ����룬Ĭ��Ϊδ֪������Ҫÿ�ж���ӡ���޸�default��ʵ�����á�
+    optional CodeType code_type = 5[default = CODE_TYPE_UNKNOWN];
+
+    //--------------------���������û���ݱ�ʶ��Ϣ--------------------
+
+    // ��ʶ�û���ݵ�id��Ϊһ���ṹ��ѡ�������д�Ĳ�����ӡ�
+    optional CookieUserid cookie_userid = 6;
+
+    // ��ʶ�û��豸��id��Ϊһ���ṹ��ѡ�������д�������
+    optional DeviceID device_id = 7;
+
+    // �û�passport session�������ص�userid��username
+    optional PassportID passport_id = 8;
+
+    // �û��ĵ绰����
+    optional string phone_num = 9;
+
+    //--------------------����������־ʱ����Ϣ--------------------
+
+    // �������˼�¼����־ʱ�������λΪ���룬���ֶαش�
+//    optional int64 timestamp = 10 [(autosetter) = "timestamp()"];
+
+    // �������˼�¼����־ʱ����Ĭ��Ϊ����������ֵΪ8����Ϊ����ʱ��������������ֵΪ-3��
+    optional int32 timezone = 11;
+
+    // �û��˼�¼����־ʱ�������λΪ����
+    optional int64 user_timestamp = 12;
+
+    // �û��˼�¼����־ʱ����Ĭ��Ϊ����������ֵΪ8����Ϊ����ʱ��������������ֵΪ-3��
+    optional int32 user_timezone = 13;
+
+    //--------------------��������λ�������Ϣ--------------------
+
+    // �û���IP��Ϣ����׼Ϊip v4����ʽΪ�޷������������ǵ��ʮ���ơ�ת����ʽʹ��С�˷���
+    optional fixed32 ip = 14;
+
+    // �û���IP��Ϣ����׼Ϊip v6��
+    optional string ipv6 = 15;
+
+    // �����ṩ����Ϣ�������¼����ֱ��ȡ����ֵ�������ǽ�������ֵ
+    optional string net_provider = 16;
+
+    // ��γ�������µ��ƶ����ꡣΪһ���ṹ������x,y���������Ϣ�Լ�����
+    optional MobileLocation mobile_location = 17;
+
+    // ī��������ϵ�µ��ƶ����ꡣ
+    optional MercatorLocation mercator_location = 18;
+
+    //--------------------����������ͬӦ����̬��������Ϣ--------------------
+
+    // httpservice��ӡ����Ϣ���������httpservice���͵���־������Ҫ��ӡ��
+    optional HttpServiceInfo http_service_info = 19;
+
+    // �豸���ն���Ϣ
+    optional TerminalInfo terminal_info = 20;
+
+    // Ӧ�������Ϣ
+    optional AppInfo app_info = 21;
+
+    // ������Ӫ����Ϣ
+    optional NetInfo net_info = 22;
+
+    //--------------------�����ֶ�Ϊ�Ƽ�ʹ�ã���������ƺ��壬��ʹ����ͬ�ֶ�����--------------------
+
+    // �������ƣ��ɲ�Ʒ���Զ���
+    optional string action_name = 23;
+
+    // ��������������Լ�������ƣ�����ʹ��tn
+    optional string tn  = 24;
+
+    // ��������Ϣ�������ڼ�������Ϊ
+    optional string query = 25;
+
+    // ҳ�������Ϣ
+    optional ViewInfo view_info = 26;
+
+    // �û��ķ��ʶ���Ϣ�����������û��ķ���ģʽ�������ڼ�¼���Զ��Դ����Ϣ����־��
+    optional ClientType client_type = 27[default=CLIENT_TYPE_UNKNOWN];
+
+}
+
+// ��message������Ҫ�޸ĳ�ͬ��־����һ�¡�
+message SampleMessage {
+
+    //----------------------------------------------------------------------------------------------------------------
+    //  �����ֶ���������ϵͳ��������Ϣ���û�����Ҫ���ġ�Ĭ�ϱ�����
+    //----------------------------------------------------------------------------------------------------------------
+    //  ���������ֶΣ�Ĭ����Ҫ����
+
+    optional MetaData metadata                     = 25;  
+    optional string   log_tag                      = 26;
+    // ͳһ�����ֶ�
+    optional Common common = 41;
+
+    //----------------------------------------------------------------------------------------------------------------
+    //  ����idС��128���ֶ�ΪԤ���ֶΣ�������ӡ��û������ֶ�id��129��ʼ��
+    //----------------------------------------------------------------------------------------------------------------
+
+    //optional fixed32 local_ip                       = 129;
+// optional fixed32 local_ip = 129 [(autosetter) = "ip_to_decimal(odp::extract_param(#local_ip))"];
+}
+message MetaData {
+    optional int32 log_module_id   =  1 [default = 1175];
+    optional string log_name        =  2 [default = "image_wantu_odp_app"];
+    optional string product_name    =  3 [default = "image"];
+}
