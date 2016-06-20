@@ -59,7 +59,6 @@ $SPARKBIN/spark-submit --class DirectKafkaWordCount \
     ...
 ```
 
-
 #### 4.现在可通过Rest API发起请求了
 
 ```
